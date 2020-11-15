@@ -7,18 +7,10 @@ public class Pedido implements Serializable{
     private static final long serialVersionUID = 1L;
 	private Long id;
 	private List<ServicoPedido> servicos;
-	private String data;
+	private String data;	
 	private Usuario usuario;
-	private List<SituacaoPedido> situacaoAtual;
+	private SituacaoPedido situacaoAtual;
 	private List<SituacaoPedido> situacao;
-	
-	public List<SituacaoPedido> getSituacaoAtual() {
-		return situacaoAtual;
-	}
-
-	public void setSituacaoAtual(List<SituacaoPedido> situacaoAtual) {
-		this.situacaoAtual = situacaoAtual;
-	}
 
 	public Pedido() {}
 
@@ -53,5 +45,13 @@ public class Pedido implements Serializable{
 	}
 	public void setSituacao(List<SituacaoPedido> situacao) {
 		this.situacao = situacao;
+	}
+
+	public SituacaoPedido getSituacaoAtual() {
+		return situacaoAtual;
+	}
+
+	public void setSituacaoAtual(SituacaoPedido situacaoAtual) {
+		this.situacaoAtual = situacaoAtual;
 	}
 }

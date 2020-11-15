@@ -27,10 +27,10 @@
 		</div>
 		<div class="row justify-content-md-center" style="padding-bottom: 15px">
 			<div class="col-lg-1">
-				<h:outputLabel value="Email: " for="email"/>
+				<h:outputLabel value="Login: " for="login"/>
 			</div>
 			<div class="col-lg-4">
-				<h:inputText value="" id="email" class="form-control" />
+				<h:inputText value="#{usuarioBean.usuario.login}" id="login" class="form-control" />
 			</div>
 		</div>
 		<div class="row justify-content-md-center" style="padding-bottom: 15px">
@@ -38,7 +38,7 @@
 				<h:outputText value="Senha: " />
 			</div>
 			<div class="col-lg-4">
-				<p:password id="senha" value="" class="form-control" />
+				<p:password id="senha" value="#{usuarioBean.usuario.senha}" class="form-control" />
 			</div>
 		</div>
 		<div class="row justify-content-md-center" style="padding-bottom: 15px">
