@@ -16,13 +16,13 @@
 		rel="stylesheet" />
 	<h:outputStylesheet name="primeicons/primeicons.css"
 		library="primefaces" />
+	<h:outputStylesheet library="css" name="styles.css" />
 	<style>
 * {
 	font-family: 'Barlow Condensed', sans-serif;
 }
 
 .footer {
-	position: absolute;
 	bottom: 0;
 	width: 100%;
 	height: 60px;
@@ -50,10 +50,15 @@
 	width: 85%;
 	padding-left: 25px;
 }
+
+.bg-dark {
+	background-color: #4e4a74 !important;
+}
 </style>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-		<a class="navbar-brand" href="#">Service Catalog <!-- <img src="resources/images/logo.png" alt="Logo - Service Catalog"/> -->
+		<a class="navbar-brand" href="#"> <p:graphicImage library="images"
+				name="logo1.png" alt="Service Catalog" width="75" height="75" />
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -66,12 +71,16 @@
 					href="./catalogo.xhtml">Catálogo de serviços</a></li>
 				<li class="nav-item active"><a class="nav-link"
 					href="./requisicoes.xhtml">Requisições</a></li>
-				<li class="nav-item active"><a class="nav-link"
-					href="./carrinho.xhtml">Carrinho<i class="pi pi-shopping-cart"></i></a></li>
+				<h:form id="user" rendered="#{usuario.admin}">
+					<li class="nav-item active"><a class="nav-link"
+						href="./usuarios.xhtml">Usuários</a></li>
+				</h:form>
 			</ul>
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link"
-					href="./index.xhtml">Sair</a></li>
+				<li class="nav-item active"><h:form>
+						<p:commandButton value="Sair" icon="pi pi-sign-out" action="#{userBean.logout}"
+							ajax="false" />
+					</h:form></li>
 			</ul>
 		</div>
 	</div>
@@ -81,31 +90,43 @@
 			<div class="col-lg-12">
 				<h2>REQUISIÇÕES</h2>
 			</div>
-			<div class="col-lg-12" style="margin-top: 30px">
-				<p:dataTable value="#{pedidoBean.pedidos}" var="p"
-					paginator="true" rows="3" paginatorPosition="top"
-					paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="10,50,100" sortMode="multiple">
-					<!--<p:column headerText="Requisição" sortBy="#{p.nome}"
-						filterBy="#{p.nome}" filterMatchMode="contains">-->
-					<p:column headerText="Requisição" sortBy="#{p.nome}">
-							<f:facet name="output">
-								#{p.nome}
-							</f:facet>
-					</p:column>
-					<!--<p:column headerText="Estado" sortBy="#{p.situacaoAtual.nome}"
-						filterBy="#{p.situacaoAtual.nome}" filterMatchMode="contains">-->
-					<p:column headerText="Estado" sortBy="#{p.situacaoAtual.nome}">
-						<f:facet name="output">
-							#{p.situacaoAtual.nome}
-						</f:facet>
-					</p:column>
-				</p:dataTable>
-			</div>
-			<div class="col-lg-12" style="margin-top: 15px">
-				<h:commandButton value="Solicitar todos" action="#"
-					class="btn btn-secondary" style="margin-right: 10px" />
-			</div>
+			<h:form id="frm">
+				<div class="col-lg-12" style="margin-top: 30px; height: 350px">
+					<p:growl id="messages" showDetail="true" />
+					<p:dataTable value="#{pedidoBean.pedidos}" var="p" paginator="true"
+						rows="3" >
+						<p:column headerText="Data">
+							<div style="text-align: center;">
+								<h:outputText value="#{p.data}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column headerText="Usuário" rendered="#{usuario.admin}">
+							<div style="text-align: center;">
+								<h:outputText value="#{p.usuario.nome}" />
+							</div>
+						</p:column>
+						<p:column headerText="Departamento" rendered="#{usuario.admin}">
+							<div style="text-align: center;">
+								<h:outputText value="#{p.usuario.departamento}" />
+							</div>
+						</p:column>
+						<p:column headerText="Situacao">
+							<div style="text-align: center;">
+								<h:outputText value="#{p.situacaos}" />
+							</div>
+						</p:column>
+						<p:column headerText="">
+							<div style="text-align: center;">
+								<h:link value="Ver requisição" outcome="./requisicao.xhtml">
+									<f:param name="id" value="#{p.id}" />
+								</h:link>
+							</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
 		</div>
 	</div>
 	<footer class="footer">

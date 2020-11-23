@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Usuários - Service Catalog</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700"
+		rel="stylesheet" />
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<style>
+* {
+	font-family: 'Barlow Condensed', sans-serif;
+}
+
+.footer {
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	background-color: #f5f5f5;
+}
+</style>
+</h:head>
+<h:body>
+	<style type="text/css">
+/*demo*/
+* {
+	font-family: 'Barlow Condensed', sans-serif;
+}
+
+.ui-dataview-list .ui-dataview-row {
+	border-bottom: 1px solid #A8A8A8;
+	padding: 25px 10px;
+	/* with the exported variables from Nova and Luna Themes*/
+	border-bottom-color: var(- -input-border-color, #A8A8A8);
+}
+
+.logo {
+	width: 5%;
+}
+
+.detail {
+	width: 85%;
+	padding-left: 25px;
+}
+
+.bg-dark {
+	background-color: #4e4a74 !important;
+}
+</style>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="#"> <p:graphicImage library="images"
+				name="logo1.png" alt="Service Catalog" width="75" height="75" />
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="./catalogo.xhtml">Catálogo de serviços</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="./requisicoes.xhtml">Requisições</a></li>
+				<h:form id="user" rendered="#{usuario.admin}">
+					<li class="nav-item active"><a class="nav-link"
+						href="./usuarios.xhtml">Usuários</a></li>
+				</h:form>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><h:form>
+						<p:commandButton value="Sair" icon="pi pi-sign-out" action="#{userBean.logout}" ajax="false" />
+					</h:form></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+	<main>
+	<div class="container content" style="margin-bottom: 55px">
+		<div class="row" style="margin-top: 45px; padding-left: 15px">
+			<div class="col-lg-12">
+				<h2>USUÁRIOS</h2>
+			</div>
+			<div class="col-lg-12" style="margin-top: 30px;">
+				<h:form id="frm">
+					<p:growl id="messages" showDetail="true" />
+					<p:dataTable value="#{usuarioBean.usuarios}" var="c"
+						paginator="true" editable="true" editMode="row">
+						<p:ajax event="rowEdit" listener="#{usuarioBean.onEdit}"
+							update=":frm:messages" />
+						<p:ajax event="rowEditCancel" listener="#{usuarioBean.onCancel}"
+							update=":frm:messages" />
+						<p:column headerText="Nome">
+							<p:cellEditor>
+								<f:facet name="output">
+									<div style="text-align: center;">
+										<h:outputText value="#{c.nome}" />
+									</div>
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.nome}" required="true">
+									</h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Login">
+							<p:cellEditor>
+								<f:facet name="output">
+									<div style="text-align: center;">
+										<h:outputText value="#{c.login}" />
+									</div>
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.login}" required="true">
+									</h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Senha">
+							<p:cellEditor>
+								<f:facet name="output">
+									<div style="text-align: center;">
+										<h:outputText value="***" />
+									</div>
+								</f:facet>
+								<f:facet name="input">
+									<p:password id="senha" value="#{c.senha}" required="true" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Departamento">
+							<p:cellEditor>
+								<f:facet name="output">
+									<div style="text-align: center;">
+										<h:outputText value="#{c.departamento}" />
+									</div>
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.departamento}" required="true">
+									</h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="">
+							<p:rowEditor />
+						</p:column>
+						<p:column headerText="">
+							<div style="text-align: center;">
+								<p:commandButton value="Excluir" icon="pi pi-trash"
+									onclick="return confirm('Confirma a exclusão');"
+									action="#{usuarioBean.excluir(c)}" update="frm" />
+							</div>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 15px; padding-left: 15px">
+			<div class="col-lg-12" style="margin-bottom: 15px;">
+				<h:form id="add" rendered="#{usuario.admin}">
+					<hr />
+					<h4>Adicionar Usuário</h4>
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Nome:" for="nome"
+							style="font-family: 'Barlow Condensed', sans-serif" />
+						<h:inputText value="#{usuarioBean.usuario.nome}" id="nome"
+							required="true" class="form-control" />
+						<h:message for="nome" styleClass="erro" />
+					</h:panelGrid>
+					<br />
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Login:" for="login"
+							style="font-family: 'Barlow Condensed', sans-serif" />
+						<h:inputText value="#{usuarioBean.usuario.login}" id="login"
+							required="true" class="form-control" />
+						<h:message for="nome" styleClass="erro" />
+					</h:panelGrid>
+					<br />
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Senha:" for="nome"
+							style="font-family: 'Barlow Condensed', sans-serif" />
+						<p:password id="senha" value="#{usuarioBean.usuario.senha}"
+							required="true" class="form-control" />
+						<h:message for="nome" styleClass="erro" />
+					</h:panelGrid>
+					<br />
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Departamento:" for="departamento"
+							style="font-family: 'Barlow Condensed', sans-serif" />
+						<h:inputText value="#{usuarioBean.usuario.departamento}"
+							id="departamento" required="true" class="form-control" />
+						<h:message for="nome" styleClass="erro" />
+					</h:panelGrid>
+					<br />
+					<p:commandButton value="Salvar" action="#{usuarioBean.gravar()}" icon="pi pi-user-plus"
+						ajax="false" />
+					<p:commandButton value="Cancelar"
+						action="#{usuarioBean.cancelar()}" ajax="false" />
+					<br />
+				</h:form>
+			</div>
+		</div>
+	</div>
+	</main>
+	<footer class="footer" style="margin-top: 45px">
+	<div class="container">
+		<span class="text-muted">Desenvolvido por Anna Haydée, Danubia
+			Cunha, Marta Nascimento</span>
+	</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins)
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script> -->
+</h:body>
+</html>

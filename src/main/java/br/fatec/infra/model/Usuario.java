@@ -1,5 +1,9 @@
 package br.fatec.infra.model;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Usuario implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -7,10 +11,20 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String login;
 	private String senha;
-	private TipoUsuario tipo;
-	private Departamento departamento;
+	private Set<String> perfis = new HashSet<String>();
+	private String departamento;
+	private List<Pedido> pedidos;
 	
-	public Usuario() {}
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Usuario() {
+	}
 
 	public Long getId() {
 		return id;
@@ -44,19 +58,26 @@ public class Usuario implements Serializable{
 		this.senha = senha;
 	}
 
-	public TipoUsuario getTipo() {
-		return tipo;
+	public Set<TipoPerfil> getPerfis() {
+		return perfis.stream()
+				.map(x -> TipoPerfil.valueOf(x))
+				.collect(Collectors.toSet());
 	}
 
-	public void setTipo(TipoUsuario tipo) {
-		this.tipo = tipo;
+	public void setPerfil() {
+		perfis = new HashSet<String>();
 	}
+	
+	public void addPerfil(TipoPerfil perfil) {
+		perfis.add(perfil.getDescricao());
+	}
+	
 
-	public Departamento getDepartamento() {
+	public String getDepartamento() {
 		return departamento;
 	}
 
-	public void setDepartamento(Departamento departamento) {
+	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 }

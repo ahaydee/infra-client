@@ -16,13 +16,13 @@
 		rel="stylesheet" />
 	<h:outputStylesheet name="primeicons/primeicons.css"
 		library="primefaces" />
+	<h:outputStylesheet library="css" name="styles.css" />
 	<style>
 * {
 	font-family: 'Barlow Condensed', sans-serif;
 }
 
 .footer {
-	position: absolute;
 	bottom: 0;
 	width: 100%;
 	height: 60px;
@@ -30,6 +30,7 @@
 	background-color: #f5f5f5;
 }
 </style>
+
 </h:head>
 <h:body>
 	<style type="text/css">
@@ -49,11 +50,15 @@
 	width: 85%;
 	padding-left: 25px;
 }
+
+.bg-dark {
+	background-color: #4e4a74 !important;
+}
 </style>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-		<a class="navbar-brand" href="#">Service Catalog 
-			<p:graphicImage library="images" name="logo.png"/>
+		<a class="navbar-brand" href="#"> <p:graphicImage library="images"
+				name="logo1.png" alt="Service Catalog" width="75" height="75" />
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -62,39 +67,51 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link" href="./catalogo.xhtml">Catálogo
-							de serviços</a></li>
-					<li class="nav-item active"><a class="nav-link" href="./requisicoes.xhtml">Requisições</a>
-					</li>
-					<li class="nav-item active"><a class="nav-link" href="./carrinho.xhtml">Carrinho<i class="pi pi-shopping-cart"></i></a></li>
-				</ul>
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="./index.xhtml">Sair</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="./catalogo.xhtml">Catálogo de serviços</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="./requisicoes.xhtml">Requisições</a></li>
+				<h:form id="user" rendered="#{usuario.admin}">
+					<li class="nav-item active"><a class="nav-link"
+						href="./usuarios.xhtml">Usuários</a></li>
+				</h:form>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><h:form>
+						<p:commandButton value="Sair" icon="pi pi-sign-out"
+							action="#{userBean.logout}" ajax="false" />
+					</h:form></li>
 			</ul>
 		</div>
 	</div>
 	</nav>
 	<div class="container content">
-		<div class="row" style="margin-top: 45px; padding-left: 15px">
-			<div class="col-lg-12">
-				<h2>CATÁLOGO DE SERVIÇOS</h2>
-			</div>
-			<div class="col-lg-12" style="margin-top: 30px">
-				<h3>CATEGORIAS</h3>
-				<h:form id="form">
-					<p:dataViewGridItem var="categoria" value="#{categoriaBean.categorias}">
-						<p:panel style="text-align:center">
-		                <h:panelGrid columns="2" style="width:100%">
-		                    <!--  adicionar icone   -->
-		 
-		                    <h:outputText value="#{categoria.nome}" />
-		 
-							<!-- adicionar botão para a categoria -->
-		                </h:panelGrid>
-		            </p:panel>
-					</p:dataViewGridItem>
-				</h:form>
-			</div>
+		<div class="row"
+			style="margin-top: 45px; padding-left: 15px; height: 450px">
+			<h:form>
+				<div class="col-lg-12">
+					<h2>CATÁLOGO DE SERVIÇOS</h2>
+					<f:metadata>
+						<f:viewParam name="id" value="#{servicoBean.idServico}"
+							converter="javax.faces.Long" />
+						<f:event listener="#{servicoBean.inicializar()}"
+							type="preRenderView"></f:event>
+					</f:metadata>
+					<br />
+					<h3>
+						<h:outputText value="#{servicoBean.servico.nome}" />
+					</h3>
+					<p>
+						<h:outputText value="#{servicoBean.servico.descricao}" />
+					</p>
+				</div>
+				<div class="col-lg-12">
+					<p:commandButton rendered="#{!usuario.admin}" value="Solicitar"
+						onclick="return confirm('Confirmar a requisição');"
+						action="#{servicoBean.solicitar()}" style=" margin-right: 10px"
+						title="Você irá requisitar apenas esse item" ajax="false" />
+				</div>
+			</h:form>
 		</div>
 	</div>
 	<footer class="footer">
