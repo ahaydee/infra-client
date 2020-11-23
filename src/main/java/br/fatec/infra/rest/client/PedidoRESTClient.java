@@ -56,7 +56,6 @@ public class PedidoRESTClient implements RESTClientInterface<Pedido> {
 				.request(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, this.token)
 				.post(Entity.entity(obj, MediaType.APPLICATION_JSON));
-		System.out.println(this.response);
 		try {
 			Pedido pedido =  this.response.readEntity(Pedido.class);
 			return pedido;

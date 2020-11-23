@@ -91,14 +91,20 @@
 				<h2>REQUISIÇÕES</h2>
 			</div>
 			<h:form id="frm">
-				<div class="col-lg-12" style="margin-top: 30px; height: 350px">
+				<f:metadata>
+					<f:viewParam name="reload" value="#{pedidoBean.reload}"
+						converter="javax.faces.Boolean" />
+					<f:event listener="#{pedidoBean.inicializar()}"
+						type="preRenderView"></f:event>
+				</f:metadata>
+				<div class="col-lg-12" style="margin-top: 30px; height: 400px">
 					<p:growl id="messages" showDetail="true" />
 					<p:dataTable value="#{pedidoBean.pedidos}" var="p" paginator="true"
-						rows="3" >
-						<p:column headerText="Data">
+						rows="5" >
+						<p:column headerText="Data" sortBy="#{p.data}">
 							<div style="text-align: center;">
 								<h:outputText value="#{p.data}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
 								</h:outputText>
 							</div>
 						</p:column>

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 
@@ -20,13 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PedidoBean implements Serializable{
     private static final long serialVersionUID = 1L;
     private Pedido pedido;
     private String login;
     private List<Pedido> pedidos;
 	private Long id;
+	private Boolean reload;
     
     public PedidoBean() {
     	CredenciaisDTO u = (CredenciaisDTO) SessionContext.getInstance().getAttribute("usuario");
@@ -43,6 +45,19 @@ public class PedidoBean implements Serializable{
 	    if (id != null) {
 	    	PedidoRESTClient rest = new PedidoRESTClient();
 	    	pedido = rest.find(id);
+	    }
+	    else {
+	    	if (reload != null && reload) {
+	        	CredenciaisDTO u = (CredenciaisDTO) SessionContext.getInstance().getAttribute("usuario");
+	        	PedidoRESTClient rest = new PedidoRESTClient();
+	        	if (u.getAdmin() == true) {
+	        		pedidos = rest.findAll();	
+	        	}
+	        	else {
+	        		login = u.getLogin();
+	        		pedidos = rest.findByUsuario(login);	
+	        	}
+	    	}
 	    }
     }
 
@@ -138,5 +153,11 @@ public class PedidoBean implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Boolean getReload() {
+		return reload;
+	}
+	public void setReload(Boolean reload) {
+		this.reload = reload;
 	}
 }

@@ -159,16 +159,14 @@ public class ServicoBean implements Serializable{
 		Date data = new Date();
 		pedido.setData(data);
 		//pega o servico e seta ele
-		List<Servico> servicos = new ArrayList();
-		servicos.add(servico);
-		pedido.setServicos(servicos);
+		pedido.setServico(servico);
 		//seta a situacao
 		pedido.setSituacaos(new ArrayList());
 		//cria o pedido
     	PedidoRESTClient rest = new PedidoRESTClient();
     	Pedido novo = rest.create(pedido);
     	if (novo != null) {
-    		return "/protected/requisicoes?faces-redirect=true";	
+    		return "/protected/requisicoes?faces-redirect=true&reload=true";	
     	}
     	else {
     		return null;

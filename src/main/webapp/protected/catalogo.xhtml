@@ -97,7 +97,7 @@
 				<h:form id="frm">
 					<p:growl id="messages" showDetail="true" />
 					<p:dataTable value="#{categoriaBean.categorias}" var="c"
-						paginator="true" editable="true" editMode="row">
+						paginator="true" editable="true" editMode="row" rows="5">
 						<p:ajax event="rowEdit" listener="#{categoriaBean.onEdit}"
 							update=":frm:messages" />
 						<p:ajax event="rowEditCancel" listener="#{categoriaBean.onCancel}"

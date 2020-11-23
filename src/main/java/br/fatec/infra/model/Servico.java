@@ -1,6 +1,8 @@
 package br.fatec.infra.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Servico implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -8,6 +10,7 @@ public class Servico implements Serializable{
 	private String nome;
 	private String descricao;
 	private Categoria categoria;
+	private List<String> pedidos = new ArrayList();
 	
 	public Servico() {}
 
@@ -41,5 +44,13 @@ public class Servico implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<String> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<String> pedidos) {
+		this.pedidos = pedidos;
 	}
 }

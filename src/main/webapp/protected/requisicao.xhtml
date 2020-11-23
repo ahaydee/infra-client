@@ -116,17 +116,12 @@
 					<br />
 				</div>
 				<div class="col-lg-12" style="margin-top: 30px; height: 200px">
-					<h4>Serviços</h4>
-					<p:growl id="messages" showDetail="true" />
-					<p:dataTable value="#{pedidoBean.pedido.servicos}" var="p"
-						paginator="true" rows="3">
-						<p:column headerText="Descrição">
-							<div style="text-align: center;">
-								<h:outputText value="#{p.descricao}">
-								</h:outputText>
-							</div>
-						</p:column>
-					</p:dataTable>
+					<h4>Serviço</h4>
+					<h:outputText value="Nome: " />
+					<h:outputText value="#{pedidoBean.pedido.servico.nome}" />
+					<br/>
+					<h:outputText value="Descrição: " />
+					<h:outputText value="#{pedidoBean.pedido.servico.descricao}" />
 				</div>
 				<div class="col-lg-12" style="margin-top: 15px; height: 75px">
 					<p:commandButton value="Reprovar"  onclick="return confirm('Reprovar o pedido');"
