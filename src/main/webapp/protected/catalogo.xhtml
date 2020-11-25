@@ -74,13 +74,15 @@
 					href="./catalogo.xhtml">Catálogo de serviços</a></li>
 				<li class="nav-item active"><a class="nav-link"
 					href="./requisicoes.xhtml">Requisições</a></li>
-				<h:form id="user" rendered="#{usuario.admin}"><li class="nav-item active"><a class="nav-link"
-					href="./usuarios.xhtml">Usuários</a></li></h:form>
+				<h:form id="user" rendered="#{usuario.admin}">
+					<li class="nav-item active"><a class="nav-link"
+						href="./usuarios.xhtml">Usuários</a></li>
+				</h:form>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active"><h:form>
-						<p:commandButton value="Sair" icon="pi pi-sign-out" action="#{userBean.logout}"
-							ajax="false" />
+						<p:commandButton value="Sair" icon="pi pi-sign-out"
+							action="#{userBean.logout}" ajax="false" />
 					</h:form></li>
 			</ul>
 		</div>
@@ -139,14 +141,15 @@
 						<hr />
 						<h4>Adicionar Categoria</h4>
 						<h:panelGrid columns="3">
-							<p:outputLabel value="Nome:" for="nome" style="font-family: 'Barlow Condensed', sans-serif"/>
+							<p:outputLabel value="Nome:" for="nome"
+								style="font-family: 'Barlow Condensed', sans-serif" />
 							<h:inputText value="#{categoriaBean.categoria.nome}" id="nome"
 								required="true" class="form-control" />
 							<h:message for="nome" styleClass="erro" />
 						</h:panelGrid>
 						<br />
-						<p:commandButton value="Salvar"
-							action="#{categoriaBean.gravar()}" ajax="false" />
+						<p:commandButton value="Salvar" action="#{categoriaBean.gravar()}"
+							ajax="false" />
 						<p:commandButton value="Cancelar"
 							action="#{categoriaBean.cancelar()}" ajax="false" />
 						<br />
